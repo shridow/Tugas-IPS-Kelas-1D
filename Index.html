@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Interaktif Sejarah Lokal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application is structured as a single-page, vertical scrolling "web-presentation" to mimic a slide deck, guiding students through the process of researching local history. It starts with a definition, moves to an interactive research guide, provides a concrete case study, shows data visualization, and ends with presentation tips. This linear flow is intuitive for a learning process, making complex research steps digestible and actionable. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Defining Local History -> Goal: Organize -> Presentation: Icon+Text Cards -> Interaction: Hover effects -> Justification: Visually separates key concepts (folklore, figures, heritage) for clarity.
+        - Report Info: Research Steps -> Goal: Change/Process -> Presentation: Vertical Timeline (HTML/CSS) -> Interaction: Clickable buttons to reveal primary/secondary source examples (JS toggle) -> Justification: Breaks down the research process into manageable steps and interactively provides deeper information on demand.
+        - Report Info: Example Historical Data -> Goal: Compare -> Viz: Bar Chart (Chart.js/Canvas) -> Interaction: Tooltips on hover -> Justification: Demonstrates how quantitative historical data (like building counts) can be presented visually, making comparisons between locations intuitive.
+        - Report Info: Case Study Details -> Goal: Inform -> Presentation: Thematic Cards -> Interaction: None -> Justification: Presents a narrative example in a clear, easy-to-read format. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #4B4237;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 100vh;
+            max-height: 450px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 0px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #D4A373;
+            border: 4px solid #FDFBF8;
+        }
+
+        .image-center {
+            padding-top: 28px;
+            padding-bottom: 28x;
+            height: 200px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 shadow-sm">
+        <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl text-[#A67B5B]">Sejarah Lokal</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#pengantar" class="text-gray-700 hover:bg-[#EAE2D9] hover:text-[#A67B5B] px-3 py-2 rounded-md text-sm font-medium">Pengantar</a>
+                        <a href="#langkah" class="text-gray-700 hover:bg-[#EAE2D9] hover:text-[#A67B5B] px-3 py-2 rounded-md text-sm font-medium">Langkah</a>
+                        <a href="#studi-kasus" class="text-gray-700 hover:bg-[#EAE2D9] hover:text-[#A67B5B] px-3 py-2 rounded-md text-sm font-medium">Studi Kasus</a>
+                        <a href="#visualisasi" class="text-gray-700 hover:bg-[#EAE2D9] hover:text-[#A67B5B] px-3 py-2 rounded-md text-sm font-medium">Visualisasi</a>
+                        <a href="#kesimpulan" class="text-gray-700 hover:bg-[#EAE2D9] hover:text-[#A67B5B] px-3 py-2 rounded-md text-sm font-medium">Kesimpulan</a>
+                        <a href="#diskusi" class="text-gray-700 hover:bg-[#EAE2D9] hover:text-[#A67B5B] px-3 py-2 rounded-md text-sm font-medium">Q&A</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8">
+
+        <section id="pengantar" class="min-h-screen flex flex-col justify-center items-center text-center py-20">
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-[#6F5E4D]">Menjelajahi Sejarah Lokal</h1>
+            <p class="mt-6 text-lg md:text-xl max-w-3xl text-gray-600">Sebuah panduan interaktif untuk meneliti, memahami, dan mempresentasikan cerita rakyat, tokoh, serta peninggalan di daerahmu.</p>
+            <a href="#definisi" class="mt-10 inline-block bg-[#D4A373] text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-[#C89360] transition-transform transform hover:scale-105">Mulai Penelitian</a>
+        </section>
+
+        <section id="pengantar" class="min-h-screen flex flex-col justify-center items-center text-center py-20">
+            <h1 class="text-3xl font-bold text-[#6F5E4D]">Anggota Kelompok</h1>
+            
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                    <div class="text-4xl text-[#D4A373] mb-4">👤</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#6F5E4D]">Hanif Wildan A.</h3>
+                    <p class="text-gray-500">2502101095</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                    <div class="text-4xl text-[#D4A373] mb-4">👤</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#6F5E4D]">Vino Akhtar A. R.</h3>
+                    <p class="text-gray-500">2502101110</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                    <div class="text-4xl text-[#D4A373] mb-4">👤</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#6F5E4D]">Sulthon R. R.</h3>
+                    <p class="text-gray-500">2502101096</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="definisi" class="py-16 md:py-24">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-[#6F5E4D]">Apa itu Sejarah Lokal?</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-600">Sejarah lokal adalah studi tentang masa lalu dalam konteks komunitas atau wilayah geografis yang lebih kecil. Ini membawa kita lebih dekat dengan peristiwa, orang, dan tempat yang membentuk identitas kita.</p>
+            </div>
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                    <div class="text-4xl text-[#D4A373] mb-4">📖</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#6F5E4D]">Cerita Rakyat</h3>
+                    <p class="text-gray-500">Kisah-kisah yang diwariskan dari generasi ke generasi, mencerminkan nilai, kepercayaan, dan kearifan lokal. Contoh: legenda, mitos, dan dongeng.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                    <div class="text-4xl text-[#D4A373] mb-4">👤</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#6F5E4D]">Tokoh Lokal</h3>
+                    <p class="text-gray-500">Individu yang memiliki pengaruh signifikan dalam perkembangan suatu daerah, baik pahlawan, seniman, maupun pemimpin masyarakat.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                    <div class="text-4xl text-[#D4A373] mb-4">🏛️</div>
+                    <h3 class="text-xl font-semibold mb-2 text-[#6F5E4D]">Peninggalan Kolonial</h3>
+                    <p class="text-gray-500">Jejak fisik dan non-fisik dari masa penjajahan, seperti bangunan, infrastruktur, sistem hukum, atau budaya yang terakulturasi.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="langkah" class="py-16 md:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#6F5E4D]">Langkah-Langkah Penelitian Sejarah</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-600">Ikuti proses ini untuk membangun penelitian sejarah lokal yang kuat dan terstruktur.</p>
+            </div>
+            <div class="relative pl-8 border-l-2 border-dashed border-[#D4A373]">
+                <div class="timeline-item mb-12">
+                    <h3 class="text-xl font-semibold text-[#A67B5B]">1. Tentukan Topik yang Spesifik</h3>
+                    <p class="mt-2 text-gray-600">Pilih satu aspek yang menarik dari sejarah daerahmu. Contoh: "Peran Stasiun Kereta Api dalam Pertumbuhan Ekonomi Kota X pada Awal Abad ke-20" lebih baik daripada "Sejarah Kota X".</p>
+                </div>
+                <div class="timeline-item mb-12">
+                    <h3 class="text-xl font-semibold text-[#A67B5B]">2. Kumpulkan Sumber Sejarah</h3>
+                    <p class="mt-2 text-gray-600">Cari informasi dari berbagai sumber untuk mendapatkan gambaran yang lengkap. Klik untuk melihat contoh:</p>
+                    <div class="mt-4 flex space-x-4">
+                        <button id="sumberPrimerBtn" class="bg-[#EAE2D9] text-[#A67B5B] font-semibold py-2 px-4 rounded-lg hover:bg-[#D4A373] hover:text-white transition">Sumber Primer</button>
+                        <button id="sumberSekunderBtn" class="bg-[#EAE2D9] text-[#A67B5B] font-semibold py-2 px-4 rounded-lg hover:bg-[#D4A373] hover:text-white transition">Sumber Sekunder</button>
+                    </div>
+                    <div id="sumberPrimer" class="hidden mt-4 bg-white p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-bold">Contoh Sumber Primer:</h4>
+                        <ul class="list-disc list-inside text-gray-600 mt-2">
+                            <li>Wawancara dengan saksi sejarah</li>
+                            <li>Surat kabar atau arsip lama</li>
+                            <li>Foto, peta, atau artefak</li>
+                            <li>Catatan harian atau surat pribadi</li>
+                        </ul>
+                    </div>
+                     <div id="sumberSekunder" class="hidden mt-4 bg-white p-4 rounded-lg border border-gray-200">
+                        <h4 class="font-bold">Contoh Sumber Sekunder:</h4>
+                        <ul class="list-disc list-inside text-gray-600 mt-2">
+                            <li>Buku sejarah yang ditulis oleh sejarawan</li>
+                            <li>Artikel jurnal akademik</li>
+                            <li>Skripsi atau tesis</li>
+                            <li>Ensiklopedia atau dokumenter</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item mb-12">
+                    <h3 class="text-xl font-semibold text-[#A67B5B]">3. Analisis dan Interpretasi</h3>
+                    <p class="mt-2 text-gray-600">Bandingkan informasi dari berbagai sumber. Cari pola, hubungan sebab-akibat, dan signifikansi peristiwa. Pertanyakan keandalan setiap sumber.</p>
+                </div>
+                 <div class="timeline-item">
+                    <h3 class="text-xl font-semibold text-[#A67B5B]">4. Tulis dan Sajikan Temuanmu</h3>
+                    <p class="mt-2 text-gray-600">Susun hasil penelitianmu secara sistematis. Gunakan narasi yang menarik, sertakan bukti dari sumber, dan buat kesimpulan yang kuat.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="studi-kasus" class="py-16 md:py-24 bg-[#EAE2D9] -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 rounded-xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#6F5E4D]">Studi Kasus: Jejak Kolonial di Kota Tua Jakarta</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-600">Sebagai contoh, mari kita lihat bagaimana elemen-elemen sejarah lokal dapat ditemukan di satu area ikonik.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="font-semibold text-lg text-[#A67B5B] mb-2">Arsitektur dan Tata Kota</h3>
+                    <p class="text-gray-600">Gedung-gedung seperti Museum Fatahillah (bekas Balai Kota Batavia) dan Museum Bank Indonesia menunjukkan gaya arsitektur Eropa yang diadaptasi. Kanal-kanal yang dibangun meniru tata kota di Belanda.</p>
+                </div>
+                 <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="font-semibold text-lg text-[#A67B5B] mb-2">Tokoh dan Peristiwa</h3>
+                    <p class="text-gray-600">Tempat ini menjadi pusat pemerintahan VOC di bawah pimpinan Jan Pieterszoon Coen. Berbagai peristiwa penting, termasuk pemberontakan dan perjanjian, terjadi di sekitar alun-alun Fatahillah.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="font-semibold text-lg text-[#A67B5B] mb-2">Kehidupan Sosial dan Ekonomi</h3>
+                    <p class="text-gray-600">Sebagai pelabuhan utama, Batavia menjadi pusat perdagangan rempah-rempah dan tempat pertemuan berbagai etnis, yang menciptakan masyarakat multikultural dengan segala kompleksitasnya.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="visualisasi" class="py-16 md:py-24">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#6F5E4D]">Visualisasi Data Sejarah</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-600">Data sejarah tidak selalu berupa teks. Mengubah data kuantitatif menjadi grafik dapat mengungkapkan pola yang menarik. Grafik di bawah menunjukkan perkiraan jumlah peninggalan bangunan kolonial di beberapa kota di Indonesia.</p>
+            </div>
+            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg border border-gray-100">
+                <div class="chart-container">
+                    <canvas id="colonialBuildingsChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <section id="kesimpulan" class=" md:py-24 bg-[#FDFBF8]">
+            <div class="text-center max-w-3xl mx-auto p-8 rounded-xl border-4 border-double border-[#D4A373] shadow-xl">
+                <h2 class="text-3xl font-bold text-[#6F5E4D]">Kesimpulan</h2>
+                <p class="mt-6 text-lg text-gray-600">Penelitian sejarah lokal adalah perjalanan penemuan yang menghubungkan kita dengan akar komunitas kita. Dengan menggali cerita rakyat, mengenali tokoh, dan memahami peninggalan kolonial, kita tidak hanya belajar tentang masa lalu, tetapi juga membentuk pemahaman yang lebih kaya tentang identitas kita saat ini. Setiap daerah memiliki kekayaan kisah yang menunggu untuk diungkap.</p>
+                <p class="mt-4 text-lg text-gray-600 font-semibold">Tantangan untuk Anda: Jadilah sejarawan bagi daerah Anda sendiri. Mulailah menggali dan dokumentasikan warisan unik yang Anda temukan.</p>
+                <a href="#pengantar" class="mt-8 inline-block bg-[#A67B5B] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#8D6B50] transition-colors">Kembali ke Awal</a>
+            </div>
+        </section>
+
+        <section id="diskusi" class="py-24 md:py-48">
+             <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-[#6F5E4D]">Ada yang ingin bertanya ?</h2>
+                <center>
+                    <img src="Tanya.jpg" class="image-center" alt="sesat">
+                </center>
+                <p class="mt-4 max-w-2xl mx-auto text-gray-600">Malu bertanya sesat dijalan</p>
+            </div>
+            
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#EAE2D9]">
+        <div class="max-w-6xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-[#6F5E4D]">
+            <p>&copy; 2025 Sejarah dalam IPS. Dibuat untuk presentasi
+    </footer>
+
+    <script>
+        const sumberPrimerBtn = document.getElementById('sumberPrimerBtn');
+        const sumberSekunderBtn = document.getElementById('sumberSekunderBtn');
+        const sumberPrimerDiv = document.getElementById('sumberPrimer');
+        const sumberSekunderDiv = document.getElementById('sumberSekunder');
+
+        sumberPrimerBtn.addEventListener('click', () => {
+            sumberPrimerDiv.classList.toggle('hidden');
+            sumberSekunderDiv.classList.add('hidden');
+        });
+
+        sumberSekunderBtn.addEventListener('click', () => {
+            sumberSekunderDiv.classList.toggle('hidden');
+            sumberPrimerDiv.classList.add('hidden');
+        });
+
+        const ctx = document.getElementById('colonialBuildingsChart').getContext('2d');
+        const colonialBuildingsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jakarta', 'Semarang', 'Surabaya', 'Bandung', 'Medan', 'Makassar'],
+                datasets: [{
+                    label: 'Perkiraan Jumlah Bangunan Peninggalan Kolonial',
+                    data: [280, 250, 200, 180, 150, 100],
+                    backgroundColor: 'rgba(212, 163, 115, 0.6)',
+                    borderColor: 'rgba(212, 163, 115, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Peninggalan Bangunan Kolonial di Kota-Kota Besar Indonesia',
+                        font: {
+                            size: 16
+                        },
+                        color: '#4B4237',
+                        padding: {
+                            bottom: 20
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y + ' bangunan';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Jumlah Bangunan',
+                            color: '#6F5E4D'
+                        }
+                    },
+                    x: {
+                         title: {
+                            display: true,
+                            text: 'Kota',
+                            color: '#6F5E4D'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
